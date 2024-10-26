@@ -181,9 +181,27 @@ describe('favorite blog', () => {
     });
   
     test('when the list is empty, returns null', () => {
-      const result = listHelper.mostBlogs([]);
+      const result = listHelper.mostBlogs(emptyList);
       assert.strictEqual(result, null);
     });
   });
   
+
+  describe('most likes', () => {
+  
+    test('author with the most likes', () => {
+      const result = listHelper.mostLikes(biggerList);
+      const expected = {
+        author: 'Edsger W. Dijkstra',
+        likes: 17
+      };
+  
+      assert.deepStrictEqual(result, expected);
+    });
+  
+    test('when the list is empty, returns null', () => {
+      const result = listHelper.mostLikes(emptyList);
+      assert.strictEqual(result, null);
+    });
+  });
 });
