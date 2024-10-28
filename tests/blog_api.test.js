@@ -123,6 +123,53 @@ test('blog without title is not added', async () => {
     assert(!titles.includes(blogToDelete.title))
   })
 
+
+  test('a blog can be successfully updated', async () => {
+    const blogsAtStart = await helper.blogsInDb();
+    const blogToUpdate = blogsAtStart[0];
+  
+    const updatedBlogData = {
+      title: "Updated Blog Title",
+      author: blogToUpdate.author,
+      url: blogToUpdate.url,
+      likes: blogToUpdate.likes + 10,
+    };
+  
+    const response = await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(updatedBlogData)
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
+  
+    
+    assert.strictEqual(response.body.title, updatedBlogData.title);
+    assert.strictEqual(response.body.likes, updatedBlogData.likes);
+  
+  
+    const blogsAtEnd = await helper.blogsInDb();
+    const updatedBlog = blogsAtEnd.find(blog => blog.id === blogToUpdate.id);
+  
+    assert.strictEqual(updatedBlog.title, updatedBlogData.title);
+    assert.strictEqual(updatedBlog.likes, updatedBlogData.likes);
+  });
+  
+  
+  test('attempting to update a blog with an invalid id returns 404', async () => {
+    const invalidId = '1234567890abcdef12345678'; 
+  
+    const updateData = {
+      title: "Invalid ID Update Attempt",
+      author: "Some Author",
+      url: "http://example.com/invalid-id",
+      likes: 1,
+    };
+  
+    await api
+      .put(`/api/blogs/${invalidId}`)
+      .send(updateData)
+      .expect(404);
+  });
+
 after(async () => {
   await mongoose.connection.close()
 })
