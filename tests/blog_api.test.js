@@ -14,6 +14,14 @@ test('blogs are returned as json', async () => {
 
 })
 
+test('unique identifier property of blogs is named id', async () => {
+    const response = await api.get('/api/blogs');
+    
+    response.body.forEach(blog => {
+      assert(blog.id);
+    });
+  });
+
 test('there are three blogs', async () => {
     const response = await api.get('/api/blogs')
   
