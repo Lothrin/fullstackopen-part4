@@ -1,9 +1,9 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QyIiwiaWQiOiI2NzIwY2VlNTE5YzkyZjgzODcxNzgwYzgiLCJpYXQiOjE3MzAyMDg2MDh9.IZB2O5jmQFyGBbwxUX5N2wLM6jBg36e6W9ReFwcPq28
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QyIiwiaWQiOiI2NzIwY2VlNTE5YzkyZjgzODcxNzgwYzgiLCJpYXQiOjE3MzAyMTIzMzB9.Oy6igo_8uC9AXsYg9a8n0f8rutaCSepCAfM8W_-208A
 
 {
-  "title": "Blog created with MW function",
+  "title": "Does it Work?",
   "author": "John Doe",
   "url": "http://example.com",
   "likes": 5
