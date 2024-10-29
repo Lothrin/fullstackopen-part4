@@ -92,7 +92,7 @@ const listWithSameLikes = [
     likes: 5,
     __v: 0
   }
-];
+]
 
 describe('dummy', () => {
 test('dummy returns one', () => {
@@ -125,34 +125,34 @@ describe('total likes', () => {
 
 describe('favorite blog', () => {
   test('when list has multiple blogs, finds the one with the most likes', () => {
-    const result = listHelper.favoriteBlog(biggerList);
+    const result = listHelper.favoriteBlog(biggerList)
     const expected = {
       title: 'Canonical string reduction',
       author: 'Edsger W. Dijkstra',
       likes: 12
-    };
+    }
     
-    assert.deepStrictEqual(result, expected);
-  });
+    assert.deepStrictEqual(result, expected)
+  })
 
   test('when list is empty, returns null', () => {
-    const result = listHelper.favoriteBlog(emptyList);
-    assert.strictEqual(result, null);
-  });
+    const result = listHelper.favoriteBlog(emptyList)
+    assert.strictEqual(result, null)
+  })
 
   test('when list has one blog, it returns that blog as favorite', () => {
-    const result = listHelper.favoriteBlog(listWithOneBlog);
+    const result = listHelper.favoriteBlog(listWithOneBlog)
     const expected = {
       title: 'Go To Statement Considered Harmful',
       author: 'Edsger W. Dijkstra',
       likes: 5
-    };
+    }
 
-    assert.deepStrictEqual(result, expected);
-  });
+    assert.deepStrictEqual(result, expected)
+  })
 
   test('when multiple blogs have the same number of likes, returns one of them', () => {
-    const result = listHelper.favoriteBlog(listWithSameLikes);
+    const result = listHelper.favoriteBlog(listWithSameLikes)
   
     const expected = {
       author: 'Robert C. Martin',
@@ -166,42 +166,42 @@ describe('favorite blog', () => {
     }
   
   
-    assert.deepStrictEqual(result, expected);
-  });
+    assert.deepStrictEqual(result, expected)
+  })
 
   describe('most blogs', () => {
     test('author with the most blogs', () => {
-      const result = listHelper.mostBlogs(biggerList);
+      const result = listHelper.mostBlogs(biggerList)
       const expected = {
         author: 'Robert C. Martin',
         blogs: 3,
-      };
+      }
   
-      assert.deepStrictEqual(result, expected);
-    });
+      assert.deepStrictEqual(result, expected)
+    })
   
     test('when the list is empty, returns null', () => {
-      const result = listHelper.mostBlogs(emptyList);
-      assert.strictEqual(result, null);
-    });
-  });
+      const result = listHelper.mostBlogs(emptyList)
+      assert.strictEqual(result, null)
+    })
+  })
   
 
   describe('most likes', () => {
   
     test('author with the most likes', () => {
-      const result = listHelper.mostLikes(biggerList);
+      const result = listHelper.mostLikes(biggerList)
       const expected = {
         author: 'Edsger W. Dijkstra',
         likes: 17
-      };
+      }
   
-      assert.deepStrictEqual(result, expected);
-    });
+      assert.deepStrictEqual(result, expected)
+    })
   
     test('when the list is empty, returns null', () => {
-      const result = listHelper.mostLikes(emptyList);
-      assert.strictEqual(result, null);
-    });
-  });
-});
+      const result = listHelper.mostLikes(emptyList)
+      assert.strictEqual(result, null)
+    })
+  })
+})

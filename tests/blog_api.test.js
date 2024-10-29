@@ -29,12 +29,12 @@ test('blogs are returned as json', async () => {
 })
 
 test('unique identifier property of blogs is named id', async () => {
-    const response = await api.get('/api/blogs');
+    const response = await api.get('/api/blogs')
     
     response.body.forEach(blog => {
-      assert(blog.id);
-    });
-  });
+      assert(blog.id)
+    })
+  })
 
 test('there are three blogs', async () => {
     const response = await api.get('/api/blogs')
@@ -84,32 +84,32 @@ test('blog without title is not added', async () => {
       author: "Author without Title",
       url: "http://example.com/no-title",
       likes: 2,
-    };
+    }
   
     await api
       .post('/api/blogs')
       .send(newBlog)
-      .expect(400);
+      .expect(400)
   
     const blogsAtEnd = await helper.blogsInDb()
-    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length);
-  });
+    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+  })
   
   test('blog without url is not added', async () => {
     const newBlog = {
       title: "No URL Blog",
       author: "Author without URL",
       likes: 2,
-    };
+    }
   
     await api
       .post('/api/blogs')
       .send(newBlog)
-      .expect(400);
+      .expect(400)
   
     const blogsAtEnd = await helper.blogsInDb()
-    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length);
-  });
+    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+  })
   
 
   test('deletion of a blog', async () => {
@@ -128,50 +128,50 @@ test('blog without title is not added', async () => {
 
 
   test('a blog can be successfully updated', async () => {
-    const blogsAtStart = await helper.blogsInDb();
-    const blogToUpdate = blogsAtStart[0];
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
   
     const updatedBlogData = {
       title: "Updated Blog Title",
       author: blogToUpdate.author,
       url: blogToUpdate.url,
       likes: blogToUpdate.likes + 10,
-    };
+    }
   
     const response = await api
       .put(`/api/blogs/${blogToUpdate.id}`)
       .send(updatedBlogData)
       .expect(200)
-      .expect('Content-Type', /application\/json/);
+      .expect('Content-Type', /application\/json/)
   
     
-    assert.strictEqual(response.body.title, updatedBlogData.title);
-    assert.strictEqual(response.body.likes, updatedBlogData.likes);
+    assert.strictEqual(response.body.title, updatedBlogData.title)
+    assert.strictEqual(response.body.likes, updatedBlogData.likes)
   
   
-    const blogsAtEnd = await helper.blogsInDb();
-    const updatedBlog = blogsAtEnd.find(blog => blog.id === blogToUpdate.id);
+    const blogsAtEnd = await helper.blogsInDb()
+    const updatedBlog = blogsAtEnd.find(blog => blog.id === blogToUpdate.id)
   
-    assert.strictEqual(updatedBlog.title, updatedBlogData.title);
-    assert.strictEqual(updatedBlog.likes, updatedBlogData.likes);
-  });
+    assert.strictEqual(updatedBlog.title, updatedBlogData.title)
+    assert.strictEqual(updatedBlog.likes, updatedBlogData.likes)
+  })
   
   
   test('attempting to update a blog with an invalid id returns 404', async () => {
-    const invalidId = '1234567890abcdef12345678'; 
+    const invalidId = '1234567890abcdef12345678'
   
     const updateData = {
       title: "Invalid ID Update Attempt",
       author: "Some Author",
       url: "http://example.com/invalid-id",
       likes: 1,
-    };
+    }
   
     await api
       .put(`/api/blogs/${invalidId}`)
       .send(updateData)
-      .expect(404);
-  });
+      .expect(404)
+  })
 
   describe('when there is initially one user in db', () => {
     beforeEach(async () => {
@@ -225,6 +225,98 @@ test('blog without title is not added', async () => {
   
       assert.strictEqual(usersAtEnd.length, usersAtStart.length)
     })
+
+    test('short username fail with status code and message', async () => {
+      const usersAtStart = await helper.usersInDb()
+    
+      const newUser = {
+        username: 'ro', 
+        name: 'Short User',
+        password: 'validpassword',
+      }
+    
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400) 
+        .expect('Content-Type', /application\/json/)
+    
+   
+      assert(result.body.error.includes('Username must be at least 3 characters long'))
+    
+    
+      const usersAtEnd = await helper.usersInDb()
+      assert.strictEqual(usersAtEnd.length, usersAtStart.length)
+    })
+    
+    test('missing username fail with status code and message', async () => {
+      const usersAtStart = await helper.usersInDb()
+    
+      const newUser = {
+        name: 'Missing Username User',
+        password: 'validpassword',
+      }
+    
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400) 
+        .expect('Content-Type', /application\/json/)
+    
+     
+      assert(result.body.error.includes('Username must be at least 3 characters long'))
+    
+     
+      const usersAtEnd = await helper.usersInDb()
+      assert.strictEqual(usersAtEnd.length, usersAtStart.length)
+    })
+    
+    test('short password fail with status code and message', async () => {
+      const usersAtStart = await helper.usersInDb()
+    
+      const newUser = {
+        username: 'validusername',
+        name: 'Valid User',
+        password: 'pw', 
+      }
+    
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400) 
+        .expect('Content-Type', /application\/json/)
+    
+     
+      assert(result.body.error.includes('Password must be at least 3 characters long'))
+    
+      
+      const usersAtEnd = await helper.usersInDb()
+      assert.strictEqual(usersAtEnd.length, usersAtStart.length)
+    })
+    
+    test('missing password fail with status code and message', async () => {
+      const usersAtStart = await helper.usersInDb()
+    
+      const newUser = {
+        username: 'validusername',
+        name: 'Missing Password User',
+      }
+    
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400) 
+        .expect('Content-Type', /application\/json/)
+    
+      
+      assert(result.body.error.includes('Password must be at least 3 characters long'))
+    
+      
+      const usersAtEnd = await helper.usersInDb()
+      assert.strictEqual(usersAtEnd.length, usersAtStart.length)
+    })
+    
+
   })
   
   

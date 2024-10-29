@@ -13,7 +13,7 @@ blogsRouter.get('/', async (request, response) => {
     if (!body.title || !body.url) {
       return response.status(400).json({
         error: 'title or url missing'
-      });
+      })
     }
 
     const blog = new Blog({
@@ -43,12 +43,12 @@ blogsRouter.get('/', async (request, response) => {
       likes: body.likes
     }
 
-    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true });
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
   
   if (updatedBlog) {
-    response.status(200).json(updatedBlog);
+    response.status(200).json(updatedBlog)
   } else {
-    response.status(404).end();
+    response.status(404).end()
   }
   })
 
