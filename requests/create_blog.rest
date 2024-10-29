@@ -3,7 +3,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QyIiwiaWQiOiI2NzIwY2VlNTE5YzkyZjgzODcxNzgwYzgiLCJpYXQiOjE3MzAyMDg2MDh9.IZB2O5jmQFyGBbwxUX5N2wLM6jBg36e6W9ReFwcPq28
 
 {
-  "title": "My Second Blog",
+  "title": "Blog created with MW function",
   "author": "John Doe",
   "url": "http://example.com",
   "likes": 5
